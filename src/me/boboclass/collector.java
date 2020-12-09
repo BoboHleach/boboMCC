@@ -11,9 +11,7 @@ public class collector extends playerClass {
         this.abilityClass = this;
     }
     protected void normal(){
-        if(delay <= 0){
-            return;
-        }
+        if(delay > 0) return;
         getOreToPlayer(-5,5);
         this.delay = 30;
     }
@@ -27,16 +25,12 @@ public class collector extends playerClass {
     }
 
     private void getOreToPlayer(int min, int max){
-        double[] coordinates = new double[3];
-        coordinates[0] = playerObject.getLocation().getX();
-        coordinates[1] = playerObject.getLocation().getY();
-        coordinates[2] = playerObject.getLocation().getZ();
         World playerWorld = playerObject.getWorld();
         for(int x = min; x < max;x++){
             for(int y = min; x<max;x++){
                 for(int z = min;z<max;z++){
-                    Material blockType = playerWorld.getBlockAt((int) (coordinates[0] + x),(int) (coordinates[1]  +y),(int) (coordinates[2] + z)).getType();
-                    playerWorld.getBlockAt((int) (coordinates[0] + x),(int) (coordinates[1]  +y),(int) (coordinates[2] + z)).setType(Material.AIR);
+                    Material blockType = playerWorld.getBlockAt((int) (playerObject.getLocation().getX() + x),(int) (playerObject.getLocation().getY()  +y),(int) (playerObject.getLocation().getZ() + z)).getType();
+                    playerWorld.getBlockAt((int) (playerObject.getLocation().getX() + x),(int) (playerObject.getLocation().getY()  +y),(int) (playerObject.getLocation().getZ() + z)).setType(Material.AIR);
                     if(blockType == Material.IRON_ORE){
                         playerObject.getInventory().addItem( new ItemStack(Material.IRON_INGOT, 1));
                     }
