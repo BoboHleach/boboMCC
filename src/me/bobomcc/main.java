@@ -3,12 +3,16 @@ package me.bobomcc;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import sun.awt.Win32GraphicsConfig;
 
 public class  main extends JavaPlugin {
-	
-	@Override 
+
+	public static Win32GraphicsConfig getPlugin() {
+	}
+
+	@Override
 	public void onEnable(){
-		
+		configHandler config = new configHandler(this);
 	}
 	
 	@Override
