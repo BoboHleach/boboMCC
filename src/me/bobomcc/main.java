@@ -2,17 +2,17 @@ package me.bobomcc;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import sun.awt.Win32GraphicsConfig;
+import me.boboclass.*;
 
 public class  main extends JavaPlugin {
-
-	public static Win32GraphicsConfig getPlugin() {
-	}
-
+	configHandler config;
+	eventHandler event;
 	@Override
 	public void onEnable(){
 		configHandler config = new configHandler(this);
+		eventHandler event = new eventHandler(this);
 	}
 	
 	@Override
@@ -30,7 +30,14 @@ public class  main extends JavaPlugin {
 				
 			}
 			else if (label.equalsIgnoreCase("class") && args.length > 0) {
-				
+				if(args[0].equalsIgnoreCase("compress")){
+					event.playerToAbilityHashMap.replace((Player) sender,compress.class);
+					return true;
+				}
+				else if(args[0].equalsIgnoreCase("collector")){
+					event.playerToAbilityHashMap.replace((Player) sender,collector.class);
+					return true;
+				}
 			}
 		}
 		return false;

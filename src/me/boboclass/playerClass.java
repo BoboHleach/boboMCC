@@ -5,8 +5,9 @@ import org.bukkit.entity.Player;
 public class playerClass {
     Player playerObject;
     int delay = 0;
-    collector abilityClass;
+    compress abilityClass;
     boolean hasUltimate= true;
+    boolean isCompressed = false;
 
     protected void normal(){
         playerObject.sendMessage("Normal Used");

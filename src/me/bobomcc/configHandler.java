@@ -7,10 +7,4 @@ public class configHandler {
     protected configHandler(main plugin){
         this.plugin = plugin;
     }
-
-    protected void run() {
-        if(){
-
-        }
-    }
 }
