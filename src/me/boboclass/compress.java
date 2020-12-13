@@ -6,14 +6,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class compress extends playerClass{
     protected compress(){
-        this.abilityClass = this;
+        this.name = "compress";
     }
 
-    protected void normal(Player attackedPlayer, Plugin p){
+    public void normal(Player attackedPlayer, Plugin p){
         compressTeleportEvent(attackedPlayer, p, 300);
     }
 
-    protected void ultimate(Player attackedPlayer, Plugin p){
+    public void ultimate(Player attackedPlayer, Plugin p){
         compressTeleportEvent(attackedPlayer,p,72000);
     }
 

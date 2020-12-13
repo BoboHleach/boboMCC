@@ -3,19 +3,23 @@ package me.boboclass;
 import org.bukkit.entity.Player;
 
 public class playerClass {
+    public String name = "playerClass";
     Player playerObject;
     int delay = 0;
-    compress abilityClass;
     boolean hasUltimate= true;
     boolean isCompressed = false;
 
-    protected void normal(){
+    public void normal(){
         playerObject.sendMessage("Normal Used");
         this.delay = 0;
     }
 
-    protected void ultimate(){
+    public void ultimate(){
         playerObject.sendMessage("Ultimate Used");
         this.hasUltimate = false;
+    }
+
+    public String returnName (){
+        return this.name;
     }
 }

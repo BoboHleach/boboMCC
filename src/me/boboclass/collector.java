@@ -6,16 +6,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class collector extends playerClass {
-    protected collector(Player playerObject){
+    public collector(Player playerObject){
         this.playerObject = playerObject;
-        this.abilityClass = this;
+        this.name = "collector";
     }
-    protected void normal(){
+    public void normal(){
         if(delay > 0) return;
         getOreToPlayer(-5,5);
         this.delay = 30;
     }
-    protected void ultimate(){
+    public void ultimate(){
         if(!hasUltimate) {
             playerObject.sendMessage("Ultimate has been used");
             return;
