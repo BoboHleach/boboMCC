@@ -1,0 +1,10 @@
+main: me.bobomcc.main
+name: BoboMCC
+version: '1.0'
+description: Minecraft Hunger Games Style GameMode
+load: POSTWORLD
+author: BoboHleach
+commands:
+  class:
+    description: Selects Class
+    usage: /<command> [compress|copy|warp|collector]
