@@ -3,8 +3,10 @@ Hunger Games Type minigame with abilities inspired by My Hero Academia.
 
 # Important Game Concepts:
 - Abilities are used with sticks
+- Zone Center is 0,0
+- World Border Damage is 2.5 hearts
 - World Border Shrink Formula:
-  - ```newWorldBorder = (OldworldBorder * 0.25) - 500```
+  - ```newWorldBorder = (OldworldBorder * 0.35) - 500```
 - Game Format:
     - Class and Team Selection
     - Game Start
@@ -24,4 +26,5 @@ Hunger Games Type minigame with abilities inspired by My Hero Academia.
     - Normal (Right Click): Teleports to the highest point in a random (20, 20) location
     - Ultimate (Player Hit): Teleports attacked player 25 blocks above ground
 - Tank:
-    - Stores players damage and increases is 15% on hit.
+    - Right Click: Toggles Damage Storing
+    - Player Hit: Releases damage on Player once toggle is off.

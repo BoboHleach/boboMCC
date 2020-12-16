@@ -13,8 +13,8 @@ public class  main extends JavaPlugin {
 	protected boolean isInGracePeriod = true;
 	@Override
 	public void onEnable(){
-		this.event = new eventHandler(this);
-		this.getServer().getPluginManager().registerEvents(event,this);
+		event = new eventHandler(this);
+		getServer().getPluginManager().registerEvents(event,this);
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

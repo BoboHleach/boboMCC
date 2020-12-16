@@ -30,7 +30,7 @@ public class playerClass {
         new BukkitRunnable() {
             @Override
             public void run() {
-                playerScoreBoardClass.update((int) abilityCooldown, hasUltimate);
+                playerScoreBoardClass.update((int) abilityCooldown, hasUltimate, name);
                 abilityCooldown = abilityCooldown - 1;
             }
         }.runTaskTimer(plugin, 20, 20);
@@ -75,34 +75,33 @@ public class playerClass {
     }
 
     protected void copyNormal(Player attackedPlayer, HashMap<Player, playerClass>  playerToPlayerClass) {
-            this.name = playerToPlayerClass.get(attackedPlayer).name;
+            name = playerToPlayerClass.get(attackedPlayer).name;
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    name = "Copy";
+                    name = "copy";
                 }
             }.runTaskLater(plugin, 600);
     }
     protected void compressNormal(Player attackedPlayer, HashMap<Player, playerClass> playerToPlayerClass){
         compressTeleportEvent(playerToPlayerClass.get(player), attackedPlayer, plugin, 600);
-        this.abilityCooldown = 30;
+        abilityCooldown = 30;
     }
 
     protected void warpNormal(){
         playerTeleport(player, -10, 10);
-        this.abilityCooldown = 30;
+        abilityCooldown = 30;
     }
 
     protected void collectorNormal() {
         getOreToPlayer(-5, 5);
-        this.abilityCooldown = 30;
+        abilityCooldown = 30;
     }
 
     protected void collectorUltimate() {
         if(hasUltimate) {
             getOreToPlayer(-15, 15);
-            this.hasUltimate = false;
-
+            hasUltimate = false;
         }
     }
 
@@ -115,7 +114,7 @@ public class playerClass {
 
     protected void tankToggleDamageHold(){
         isHoldingDamage = !isHoldingDamage;
-        player.sendMessage("Holding Damage");
+        player.sendMessage("Holding Damage: " + isHoldingDamage);
     }
 }
 

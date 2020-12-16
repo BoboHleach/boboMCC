@@ -11,6 +11,7 @@ public class worldBorder {
         this.plugin = plugin;
         this.worldToShrink = worldToShrink;
         this.worldToShrink.getWorldBorder().setCenter(new Location(worldToShrink, 0,0,0));
+        this.worldToShrink.getWorldBorder().setDamageAmount(5);
     }
 
     protected void startShrink(){
@@ -18,7 +19,7 @@ public class worldBorder {
         new BukkitRunnable() {
             @Override
             public void run() {
-                worldToShrink.getWorldBorder().setSize((worldToShrink.getWorldBorder().getSize() * 0.25) - 500);
+                worldToShrink.getWorldBorder().setSize((worldToShrink.getWorldBorder().getSize() * 0.35) - 500);
                 plugin.getServer().broadcastMessage("World Border has Shrank");
             }
         }.runTaskTimer(plugin,6000,6000);
