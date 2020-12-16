@@ -1,5 +1,6 @@
 package me.bobomcc;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -18,7 +19,8 @@ public class playerClass {
     public String name = "default";
     protected float abilityCooldown, holdingDamageAmount = 0;
     protected boolean hasUltimate = true;
-    protected boolean isCompress,isHoldingDamage = false;
+    boolean isCompress,isHoldingDamage = false;
+    Location previousCompressionLocation;
     protected scoreboardManager playerScoreBoardClass;
 
     protected playerClass(Player playerObject, main mainPlugin) {
@@ -36,11 +38,16 @@ public class playerClass {
 
     private void compressTeleportEvent(playerClass attackedPlayerClass, Player attackedPlayer, Plugin p, int timerDelay) {
         attackedPlayer.sendMessage("You have been Compressed, Releasing in 15 seconds");
+        this.previousCompressionLocation = attackedPlayer.getLocation();
         attackedPlayerClass.isCompress = true;
+        attackedPlayer.teleport(new Location(player.getWorld(),10000000, 1000000, 100000));
+        attackedPlayer.setGameMode(GameMode.SPECTATOR);
         new BukkitRunnable() {
             @Override
             public void run() {
                 attackedPlayerClass.isCompress = false;
+                attackedPlayer.teleport(previousCompressionLocation);
+                attackedPlayer.setGameMode(GameMode.SURVIVAL);
             }
         }.runTaskLater(p, timerDelay);
     }
@@ -69,7 +76,6 @@ public class playerClass {
 
     protected void copyNormal(Player attackedPlayer, HashMap<Player, playerClass>  playerToPlayerClass) {
             this.name = playerToPlayerClass.get(attackedPlayer).name;
-            this.abilityCooldown = 30;
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -109,6 +115,7 @@ public class playerClass {
 
     protected void tankToggleDamageHold(){
         isHoldingDamage = !isHoldingDamage;
+        player.sendMessage("Holding Damage");
     }
 }
 

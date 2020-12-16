@@ -11,6 +11,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -36,7 +37,7 @@ public class eventHandler implements Listener {
 					playerToAbilityHashMap.get(e.getPlayer()).warpNormal();
 				}
 				else if(playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("tank")){
-					playerToAbilityHashMap.get(e).tankToggleDamageHold();
+					playerToAbilityHashMap.get(e.getPlayer()).tankToggleDamageHold();
 				}
 			}
 
@@ -56,6 +57,7 @@ public class eventHandler implements Listener {
 		else {
 			Player damager = (Player) e.getDamager();
 			Player receiver = (Player) e.getEntity();
+			if(damager.getInventory().getItemInHand().getType() != Material.STICK)return;
 			if (playerToAbilityHashMap.get(damager).name.equalsIgnoreCase("warp") && playerToAbilityHashMap.get(damager).hasUltimate) {
 				playerToAbilityHashMap.get(damager).warpUltimate(receiver, damager, playerToAbilityHashMap);
 			} else if (playerToAbilityHashMap.get(damager).name.equalsIgnoreCase("copy")) {
@@ -66,6 +68,7 @@ public class eventHandler implements Listener {
 			else if(playerToAbilityHashMap.get(damager).name.equalsIgnoreCase("tank")){
 				if(!playerToAbilityHashMap.get(damager).isHoldingDamage && playerToAbilityHashMap.get(damager).holdingDamageAmount > 0){
 					((Player) e.getEntity()).damage(playerToAbilityHashMap.get(damager).holdingDamageAmount);
+					playerToAbilityHashMap.get(damager).holdingDamageAmount = 0;
 				}
 			}
 			if (playerToAbilityHashMap.get(receiver).name.equalsIgnoreCase("tank")){
@@ -81,7 +84,7 @@ public class eventHandler implements Listener {
 	protected void PlayerJoinEvent(PlayerJoinEvent e){
 		playerToAbilityHashMap.putIfAbsent(e.getPlayer(), new playerClass(e.getPlayer(), plugin));
 		playerTeamHashMap.putIfAbsent(e.getPlayer(), e.getPlayer().getUniqueId().toString());
-		System.out.println(playerToAbilityHashMap);
+		e.getPlayer().getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
 	}
 
 	@EventHandler
