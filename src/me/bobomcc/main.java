@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class  main extends JavaPlugin {
-	eventHandler event;
-	boolean hasStarted = false;
+	private eventHandler event;
+	private boolean hasStarted = false;
 	@Override
 	public void onEnable(){
 		this.event = new eventHandler(this);
@@ -24,7 +24,7 @@ public class  main extends JavaPlugin {
 				if (label.equalsIgnoreCase("team") && args.length > 0) {
 
 				} else if (label.equalsIgnoreCase("class") && args.length > 0) {
-					event.playerToAbilityHashMap.get((Player) sender).name = args[0];
+					event.playerToAbilityHashMap.get(sender).name = args[0];
 					return true;
 				}
 

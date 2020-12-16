@@ -17,11 +17,8 @@ public class scoreboardManager {
     }
     protected void update(int timeLeft, boolean isUltimateAvailable){
         reset();
-        timerScore = playerObjective.getScore("Timer: "+ timeLeft);
-        timerScore.setScore(0);
-        ultimateScore = playerObjective.getScore("Ultimate: " + isUltimateAvailable);
-        ultimateScore.setScore(1);
-        playerObjective.setDisplayName("Cooldown");
+        playerObjective.getScore("Timer: "+ timeLeft).setScore(0);
+        playerObjective.getScore("Ultimate: " + isUltimateAvailable).setScore(1);
         player.setScoreboard(playerScoreboard);
     }
 
@@ -30,5 +27,6 @@ public class scoreboardManager {
         playerObjective = playerScoreboard.registerNewObjective("test", "dummy");
         playerObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
         playerObjective.setDisplayName("Timer");
+        playerObjective.setDisplayName("Cooldown");
     }
 }
