@@ -20,19 +20,19 @@ public class eventHandler implements Listener {
 	@EventHandler
 	protected void PlayerInteractEvent(PlayerInteractEvent e) {
 		if(e.getPlayer().getItemInHand().getType() != Material.STICK)return;
-		if(playerToAbilityHashMap.get((Player) e).abilityCooldown > 0)return;
+		if(playerToAbilityHashMap.get(e.getPlayer()).abilityCooldown > 0)return;
 		else {
 			if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
-				if(playerToAbilityHashMap.get(e).name.equalsIgnoreCase( "collector")){
-					playerToAbilityHashMap.get(e).collectorNormal();
+				if(playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase( "collector")){
+					playerToAbilityHashMap.get(e.getPlayer()).collectorNormal();
 				}
-				else if(playerToAbilityHashMap.get(e).name.equalsIgnoreCase("warp")){
-					playerToAbilityHashMap.get(e).warpNormal();
+				else if(playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("warp")){
+					playerToAbilityHashMap.get(e.getPlayer()).warpNormal();
 				}
 			}
 			else if(e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK){
-				if(playerToAbilityHashMap.get(e).name.equalsIgnoreCase( "collector")){
-					playerToAbilityHashMap.get(e).collectorUltimate();
+				if(playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase( "collector")){
+					playerToAbilityHashMap.get(e.getPlayer()).collectorUltimate();
 				}
 			}
 		}
@@ -40,7 +40,7 @@ public class eventHandler implements Listener {
 	@EventHandler
 	protected  void EntityDamageByEntityEvent(EntityDamageByEntityEvent e){
 		if(e.getEntity().getType() != EntityType.PLAYER || e.getDamager().getType() != EntityType.PLAYER)return;
-		if(playerToAbilityHashMap.get(e).abilityCooldown > 0) return;
+		if(playerToAbilityHashMap.get((Player) e).abilityCooldown > 0) return;
 		if(playerToAbilityHashMap.get(e).name.equalsIgnoreCase( "ultimate") && playerToAbilityHashMap.get(e).hasUltimate){
 			playerToAbilityHashMap.get(e).warpUltimate(((Player) e), playerToAbilityHashMap);
 		}

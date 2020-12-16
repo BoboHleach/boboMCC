@@ -19,15 +19,14 @@ public class  main extends JavaPlugin {
 		if(label.equalsIgnoreCase("start") && sender.isOp()) {
 			hasStarted = true;
 			this.getServer().getPluginManager().registerEvents(event,this);
+			return true;
 		}
 		if(!hasStarted) {
 				if (label.equalsIgnoreCase("team") && args.length > 0) {
-
 				} else if (label.equalsIgnoreCase("class") && args.length > 0) {
 					event.playerToAbilityHashMap.get(sender).name = args[0];
 					return true;
 				}
-
 		}
 		return false;
 	}
