@@ -23,3 +23,5 @@ Hunger Games Type minigame with abilities inspired by My Hero Academia.
 - Warp:
     - Normal (Right Click): Teleports to the highest point in a random (20, 20) location
     - Ultimate (Player Hit): Teleports attacked player 25 blocks above ground
+- Tank:
+    - Stores players damage and increases is 15% on hit.

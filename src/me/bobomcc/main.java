@@ -33,6 +33,10 @@ public class  main extends JavaPlugin {
 			return true;
 		}
 		if(!hasStarted) {
+			if(!args[0].equalsIgnoreCase("compress") || !args[0].equalsIgnoreCase("copy") || !args[0].equalsIgnoreCase("warp") || !args[0].equalsIgnoreCase("collector") ||!args[0].equalsIgnoreCase("tank")){
+				sender.sendMessage("Invalid Class\n Please select: compress|copy|warp|collector|tank");
+				return true;
+			}
 				if (label.equalsIgnoreCase("team") && args.length > 0) {
 					event.playerTeamHashMap.replace((Player) sender,args[0]);
 					return true;

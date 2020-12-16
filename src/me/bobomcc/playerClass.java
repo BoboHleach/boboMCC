@@ -16,9 +16,9 @@ public class playerClass {
     protected main plugin;
     protected Player player;
     public String name = "default";
-    protected float abilityCooldown = 0;
+    protected float abilityCooldown, holdingDamageAmount = 0;
     protected boolean hasUltimate = true;
-    protected boolean isCompress = false;
+    protected boolean isCompress,isHoldingDamage = false;
     protected scoreboardManager playerScoreBoardClass;
 
     protected playerClass(Player playerObject, main mainPlugin) {
@@ -120,5 +120,8 @@ public class playerClass {
         }
     }
 
+    protected void tankToggleDamageHold(){
+        isHoldingDamage = !isHoldingDamage;
+    }
 }
 

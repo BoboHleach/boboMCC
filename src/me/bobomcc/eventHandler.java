@@ -34,6 +34,9 @@ public class eventHandler implements Listener {
 				} else if (playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("warp")) {
 					playerToAbilityHashMap.get(e.getPlayer()).warpNormal();
 				}
+				else if(playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("tank")){
+					playerToAbilityHashMap.get(e).tankToggleDamageHold();
+				}
 			} else if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
 				if (playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("collector")) {
 					playerToAbilityHashMap.get(e.getPlayer()).collectorUltimate();
@@ -57,6 +60,17 @@ public class eventHandler implements Listener {
 			} else if (playerToAbilityHashMap.get(damager).name.equalsIgnoreCase("compress")) {
 				playerToAbilityHashMap.get(damager).compressNormal(receiver, playerToAbilityHashMap);
 			}
+			else if(playerToAbilityHashMap.get(damager).name.equalsIgnoreCase("tank")){
+				if(!playerToAbilityHashMap.get(damager).isHoldingDamage && playerToAbilityHashMap.get(damager).holdingDamageAmount > 0){
+					((Player) e.getEntity()).damage(playerToAbilityHashMap.get(damager).holdingDamageAmount);
+				}
+			}
+			if (playerToAbilityHashMap.get(receiver).name.equalsIgnoreCase("tank")){
+				if(playerToAbilityHashMap.get(receiver).isHoldingDamage){
+					playerToAbilityHashMap.get(receiver).holdingDamageAmount = (float) (playerToAbilityHashMap.get(receiver).holdingDamageAmount +e.getDamage());
+				}
+			}
+
 		}
 	}
 
