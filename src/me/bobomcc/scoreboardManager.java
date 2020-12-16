@@ -17,6 +17,7 @@ public class scoreboardManager {
     }
     protected void update(int timeLeft, boolean isUltimateAvailable){
         reset();
+        if(timeLeft < 0) timeLeft = 0;
         playerObjective.getScore("Timer: "+ timeLeft).setScore(0);
         playerObjective.getScore("Ultimate: " + isUltimateAvailable).setScore(1);
         player.setScoreboard(playerScoreboard);

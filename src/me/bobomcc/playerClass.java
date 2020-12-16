@@ -17,7 +17,8 @@ public class playerClass {
     protected Player player;
     public String name = "default";
     protected float abilityCooldown = 0;
-    protected boolean hasUltimate, isCompress = false;
+    protected boolean hasUltimate = true;
+    protected boolean isCompress = false;
     protected scoreboardManager playerScoreBoardClass;
 
     protected playerClass(Player playerObject, main mainPlugin) {
@@ -67,9 +68,9 @@ public class playerClass {
 
     private void playerTeleport(Player p, int min, int max) {
         Random rand = new Random();
-        int xCoordinate = rand.nextInt(max + min) - min;
-        int zCoordinate = rand.nextInt(max + min) - min;
-        player.teleport(new Location(player.getWorld(), player.getLocation().getX() + xCoordinate, player.getWorld().getHighestBlockYAt((int) player.getLocation().getX() + xCoordinate, (int) player.getLocation().getZ() + zCoordinate) + 1, player.getLocation().getZ()));
+        int xCoordinate = rand.nextInt(max + -min) - min;
+        int zCoordinate = rand.nextInt(max + -min) - min;
+        player.teleport(new Location(player.getWorld(), player.getLocation().getX() + xCoordinate, player.getWorld().getHighestBlockYAt((int) player.getLocation().getX() + xCoordinate, (int) player.getLocation().getZ() + zCoordinate) + 1, player.getLocation().getZ() + zCoordinate));
     }
 
     protected void copyNormal(Player attackedPlayer, HashMap<Player, playerClass>  playerToPlayerClass) {
@@ -104,9 +105,9 @@ public class playerClass {
         this.hasUltimate = false;
     }
 
-    protected void warpUltimate(Player attackedPlayer, HashMap<Player, playerClass>  playerToPlayerClass){
+    protected void warpUltimate(Player attackedPlayer, Player damager, HashMap<Player, playerClass>  playerToPlayerClass){
         attackedPlayer.teleport(attackedPlayer.getLocation().add(0, 25, 0));
-        hasUltimate = false;
+        playerToPlayerClass.get(damager).hasUltimate = false;
     }
 
 }

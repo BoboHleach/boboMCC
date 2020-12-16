@@ -11,3 +11,6 @@ commands:
   start:
     description: Starts the game
     usage: /<command>
+  team:
+    description: Sets team for users
+    usage: /<command> [team_name]
