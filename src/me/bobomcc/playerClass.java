@@ -16,7 +16,7 @@ public class playerClass {
 
     protected main plugin;
     protected Player player;
-    public String name = "default";
+    public String name,teamName = "default";
     protected float abilityCooldown, holdingDamageAmount = 0;
     protected boolean hasUltimate = true;
     boolean isCompress,isHoldingDamage = false;
@@ -30,7 +30,8 @@ public class playerClass {
         new BukkitRunnable() {
             @Override
             public void run() {
-                playerScoreBoardClass.update((int) abilityCooldown, hasUltimate, name);
+                teamName = plugin.event.playerTeamHashMap.get(playerObject);
+                playerScoreBoardClass.update((int) abilityCooldown, hasUltimate, name, teamName);
                 abilityCooldown = abilityCooldown - 1;
             }
         }.runTaskTimer(plugin, 20, 20);

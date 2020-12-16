@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class  main extends JavaPlugin {
-	private eventHandler event;
+	protected eventHandler event;
 	protected boolean hasStarted = false;
 	private worldBorder worldBorderHandler;
 	protected boolean isInGracePeriod = true;

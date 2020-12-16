@@ -14,12 +14,13 @@ public class scoreboardManager {
         this.player = p;
         resetScoreboard();
     }
-    protected void update(int timeLeft, boolean isUltimateAvailable, String abilityName){
+    protected void update(int timeLeft, boolean isUltimateAvailable, String abilityName, String teamName){
         resetScoreboard();
         if(timeLeft < 0) timeLeft = 0;
         playerObjective.getScore("Activation Cooldown: "+ timeLeft).setScore(10);
         playerObjective.getScore("Ultimate: " + isUltimateAvailable).setScore(20);
         playerObjective.getScore("Ability: " + abilityName).setScore(0);
+        playerObjective.getScore("Team: " + teamName).setScore(5);
         player.setScoreboard(playerScoreboard);
     }
 

@@ -16,9 +16,9 @@ Hunger Games Type minigame with abilities inspired by My Hero Academia.
         - Abilities Enabled
 # Abilities:
 - Compress
-    - Teleports a player away and returns after 15 seconds when hit
+    - Normal (Player Hit): Teleports a player away and returns after 15 seconds when hit
 - Copy:
-    - Copies abilities of user that was hit
+    - Normal (Player Hit): Copies abilities of user that was hit
 - Collector
     - Normal (Right Click): Mines all ores in 5 x 5 x 5 Volume
     - Ultimate (Left Click): Mines all ores 10 x 10 x 10 Volume
