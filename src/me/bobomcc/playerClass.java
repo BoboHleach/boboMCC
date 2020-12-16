@@ -13,13 +13,26 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class playerClass {
+
     protected main plugin;
     protected Player player;
-    protected String name = "default";
+    public String name = "default";
     protected float delay = 0;
     protected boolean hasUltimate = false;
     protected boolean isCompress = false;
-
+    protected scoreboardManager playerScoreBoardClass;
+    protected  playerClass(Player p, main plug){
+        player = p;
+        plugin = plug;
+        playerScoreBoardClass = new scoreboardManager(player);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                playerScoreBoardClass.update((int) delay,hasUltimate);
+                delay = delay - 1;
+            }
+        }.runTaskTimer(plugin,20,20);
+    }
     private void compressTeleportEvent(playerClass attackedPlayerClass, Player attackedPlayer, Plugin p, int timerDelay) {
         attackedPlayer.sendMessage("You have been Compressed, Releasing in 15 seconds");
         attackedPlayerClass.isCompress = true;
@@ -34,7 +47,7 @@ public class playerClass {
     private void getOreToPlayer(int min, int max) {
         World playerWorld = player.getWorld();
         for (int x = min; x < max; x++) {
-            for (int y = min; x < max; x++) {
+            for (int y = min; y < max; y++) {
                 for (int z = min; z < max; z++) {
                     Material blockType = playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).getType();
                     playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).setType(Material.AIR);
@@ -60,12 +73,6 @@ public class playerClass {
     }
 
     protected void run(Action e, HashMap<Player, playerClass> playerToPlayerClass, Player attackedPlayer) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                delay = delay - 1;
-            }
-        }.runTaskTimer(plugin, 20, 20);
         if (delay <= 0) {
             if (e == null) {
                 if (name.equalsIgnoreCase("Compress")) {

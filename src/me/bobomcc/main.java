@@ -7,24 +7,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class  main extends JavaPlugin {
 	eventHandler event;
-
+	boolean hasStarted = false;
 	@Override
 	public void onEnable(){
-		eventHandler event = new eventHandler(this);
+		this.event = new eventHandler(this);
+		playerJoinEvent playerJoinClass = new playerJoinEvent(event,this);
+		this.getServer().getPluginManager().registerEvents(playerJoinClass,this);
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(label.equalsIgnoreCase("start") && sender.isOp()) {
-			
+			hasStarted = true;
+			this.getServer().getPluginManager().registerEvents(event,this);
 		}
-		else {
-			if(label.equalsIgnoreCase("team") && args.length > 0) {
-				
-			}
-			else if (label.equalsIgnoreCase("class") && args.length > 0) {
-				event.playerToAbilityHashMap.get((Player) sender).name = args[0];
-				return true;
-			}
+		if(!hasStarted) {
+				if (label.equalsIgnoreCase("team") && args.length > 0) {
+
+				} else if (label.equalsIgnoreCase("class") && args.length > 0) {
+					event.playerToAbilityHashMap.get((Player) sender).name = args[0];
+					return true;
+				}
+
 		}
 		return false;
 	}
