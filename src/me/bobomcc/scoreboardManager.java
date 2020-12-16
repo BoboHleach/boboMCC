@@ -9,25 +9,23 @@ import org.bukkit.scoreboard.Scoreboard;
 public class scoreboardManager {
     Scoreboard playerScoreboard;
     Objective playerObjective;
-    Score timerScore, ultimateScore;
     Player player;
     public scoreboardManager(Player p){
         this.player = p;
-        reset();
+        resetScoreboard();
     }
     protected void update(int timeLeft, boolean isUltimateAvailable){
-        reset();
+        resetScoreboard();
         if(timeLeft < 0) timeLeft = 0;
         playerObjective.getScore("Timer: "+ timeLeft).setScore(0);
         playerObjective.getScore("Ultimate: " + isUltimateAvailable).setScore(1);
         player.setScoreboard(playerScoreboard);
     }
 
-    private void reset(){
+    private void resetScoreboard(){
         playerScoreboard = player.getServer().getScoreboardManager().getNewScoreboard();
         playerObjective = playerScoreboard.registerNewObjective("test", "dummy");
         playerObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        playerObjective.setDisplayName("Timer");
         playerObjective.setDisplayName("Cooldown");
     }
 }

@@ -14,8 +14,6 @@ public class  main extends JavaPlugin {
 	@Override
 	public void onEnable(){
 		this.event = new eventHandler(this);
-		playerJoinEvent playerJoinClass = new playerJoinEvent(event,this);
-		this.getServer().getPluginManager().registerEvents(playerJoinClass,this);
 		this.getServer().getPluginManager().registerEvents(event,this);
 	}
 	@Override

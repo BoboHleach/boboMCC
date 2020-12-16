@@ -51,15 +51,18 @@ public class playerClass {
             for (int y = min; y < max; y++) {
                 for (int z = min; z < max; z++) {
                     Material blockType = playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).getType();
-                    playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).setType(Material.AIR);
                     if (blockType == Material.IRON_ORE) {
                         player.getInventory().addItem(new ItemStack(Material.IRON_INGOT, 1));
+                        playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).setType(Material.AIR);
                     } else if (blockType == Material.DIAMOND_ORE) {
                         player.getInventory().addItem(new ItemStack(Material.DIAMOND, 1));
+                        playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).setType(Material.AIR);
                     } else if (blockType == Material.COAL_ORE) {
                         player.getInventory().addItem(new ItemStack(Material.COAL, 1));
+                        playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).setType(Material.AIR);
                     } else if (blockType == Material.GOLD_ORE) {
                         player.getInventory().addItem(new ItemStack(Material.GOLD_INGOT, 1));
+                        playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).setType(Material.AIR);
                     }
                 }
             }
@@ -74,7 +77,7 @@ public class playerClass {
     }
 
     protected void copyNormal(Player attackedPlayer, HashMap<Player, playerClass>  playerToPlayerClass) {
-        if (attackedPlayer != null) {
+        if(abilityCooldown > 0)return;
             this.name = playerToPlayerClass.get(attackedPlayer).name;
             this.abilityCooldown = 30;
             new BukkitRunnable() {
@@ -83,31 +86,38 @@ public class playerClass {
                     name = "Copy";
                 }
             }.runTaskLater(plugin, 600);
-        }
     }
     protected void compressNormal(Player attackedPlayer, HashMap<Player, playerClass> playerToPlayerClass){
+        if(abilityCooldown > 0)return;
         compressTeleportEvent(playerToPlayerClass.get(player), attackedPlayer, plugin, 600);
         this.abilityCooldown = 30;
     }
 
     protected void warpNormal(){
+        if(abilityCooldown > 0)return;
         playerTeleport(player, -10, 10);
         this.abilityCooldown = 30;
     }
 
     protected void collectorNormal() {
+        if(abilityCooldown > 0)return;
         getOreToPlayer(-5, 5);
         this.abilityCooldown = 30;
     }
 
     protected void collectorUltimate() {
-        getOreToPlayer(-25, 25);
-        this.hasUltimate = false;
+        if(hasUltimate) {
+            getOreToPlayer(-15, 15);
+            this.hasUltimate = false;
+
+        }
     }
 
     protected void warpUltimate(Player attackedPlayer, Player damager, HashMap<Player, playerClass>  playerToPlayerClass){
-        attackedPlayer.teleport(attackedPlayer.getLocation().add(0, 25, 0));
-        playerToPlayerClass.get(damager).hasUltimate = false;
+        if(hasUltimate) {
+            attackedPlayer.teleport(attackedPlayer.getLocation().add(0, 25, 0));
+            playerToPlayerClass.get(damager).hasUltimate = false;
+        }
     }
 
 }
