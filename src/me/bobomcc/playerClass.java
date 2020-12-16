@@ -52,7 +52,7 @@ public class playerClass {
                 for (int z = min; z < max; z++) {
                     Material blockType = playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).getType();
                     if (blockType == Material.IRON_ORE || blockType == Material.DIAMOND_ORE || blockType == Material.COAL_ORE || blockType == Material.GOLD_ORE) {
-                        player.getInventory().addItem(new ItemStack(blockType, 1));
+                        player.getInventory().addItem(new ItemStack(blockType., 1));
                         playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).setType(Material.AIR);
                     }
                 }

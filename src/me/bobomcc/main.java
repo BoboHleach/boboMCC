@@ -33,17 +33,19 @@ public class  main extends JavaPlugin {
 			return true;
 		}
 		if(!hasStarted) {
-			// Checks if flag 1 is a valid Optioon
-			if(!args[0].equalsIgnoreCase("compress") && !args[0].equalsIgnoreCase("copy") && !args[0].equalsIgnoreCase("warp") && !args[0].equalsIgnoreCase("collector") && !args[0].equalsIgnoreCase("tank")){
-				sender.sendMessage("Invalid Class\nPlease select: compress|copy|warp|collector|tank");
-			}
-				if (label.equalsIgnoreCase("team") && args.length > 0) {
-					event.playerTeamHashMap.replace((Player) sender,args[0]);
+			// Checks if flag 1 is a valid Option
+			if (args.length != 0) {
+				if (!args[0].equalsIgnoreCase("compress") && !args[0].equalsIgnoreCase("copy") && !args[0].equalsIgnoreCase("warp") && !args[0].equalsIgnoreCase("collector") && !args[0].equalsIgnoreCase("tank")) {
+					sender.sendMessage("Invalid Class\nPlease select: compress|copy|warp|collector|tank");
 				} else if (label.equalsIgnoreCase("class") && args.length > 0) {
 					event.playerToAbilityHashMap.get(sender).name = args[0];
 					sender.sendMessage("You Have Selected: " + args[0]);
 				}
+				if (label.equalsIgnoreCase("team") && args.length > 0) {
+					event.playerTeamHashMap.replace((Player) sender, args[0]);
+				}
 				return true;
+			}
 		}
 		return false;
 	}
