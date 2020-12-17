@@ -19,7 +19,7 @@ public class worldBorder {
         new BukkitRunnable() {
             @Override
             public void run() {
-                worldToShrink.getWorldBorder().setSize((worldToShrink.getWorldBorder().getSize() * 0.35) - 500);
+                worldToShrink.getWorldBorder().setSize((worldToShrink.getWorldBorder().getSize() * 0.5) - 500);
                 plugin.getServer().broadcastMessage("World Border has Shrank");
             }
         }.runTaskTimer(plugin,6000,6000);
