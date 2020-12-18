@@ -71,6 +71,9 @@ public class eventHandler implements Listener {
 			} else if (playerToAbilityHashMap.get(damager).name.equalsIgnoreCase("compress")) {
 				playerToAbilityHashMap.get(damager).compressNormal(receiver, playerToAbilityHashMap);
 			}
+			else if (playerToAbilityHashMap.get(damager).name.equalsIgnoreCase("erase")) {
+				playerToAbilityHashMap.get(damager).eraseAbility(((Player) e.getEntity()).getPlayer(), playerToAbilityHashMap);
+			}
 			else if(playerToAbilityHashMap.get(damager).name.equalsIgnoreCase("tank") && !playerToAbilityHashMap.get(damager).isHoldingDamage && playerToAbilityHashMap.get(damager).holdingDamageAmount > 0){
 					((Player) e.getEntity()).damage(playerToAbilityHashMap.get(damager).holdingDamageAmount);
 					playerToAbilityHashMap.get(damager).holdingDamageAmount = 0;

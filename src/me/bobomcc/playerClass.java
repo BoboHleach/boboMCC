@@ -117,5 +117,11 @@ public class playerClass {
         isHoldingDamage = !isHoldingDamage;
         player.sendMessage("Holding Damage: " + isHoldingDamage);
     }
+
+    protected void eraseAbility(Player attackedPlayer, HashMap<Player,playerClass> playerClassHashMap){
+        if(abilityCooldown > 0)return;
+        playerClassHashMap.get(attackedPlayer).abilityCooldown = playerClassHashMap.get(attackedPlayer).abilityCooldown + 15;
+        abilityCooldown = 30;
+    }
 }
 

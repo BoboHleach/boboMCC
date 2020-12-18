@@ -18,7 +18,7 @@ public class  main extends JavaPlugin {
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if(label.equalsIgnoreCase("start") && sender.isOp()) {
+		if(label.equalsIgnoreCase("start") && sender.isOp() && !hasStarted) {
 			hasStarted = true;
 			worldBorderHandler = new worldBorder(this, ((Player) sender).getWorld());
 			worldBorderHandler.startShrink();
@@ -39,8 +39,8 @@ public class  main extends JavaPlugin {
 					event.playerTeamHashMap.replace((Player) sender, args[0]);
 					return true;
 				}
-				if (!args[0].equalsIgnoreCase("compress") && !args[0].equalsIgnoreCase("copy") && !args[0].equalsIgnoreCase("warp") && !args[0].equalsIgnoreCase("collector") && !args[0].equalsIgnoreCase("tank")) {
-					sender.sendMessage("Invalid Class\nPlease select: compress|copy|warp|collector|tank");
+				if (!args[0].equalsIgnoreCase("erase") && !args[0].equalsIgnoreCase("compress") && !args[0].equalsIgnoreCase("copy") && !args[0].equalsIgnoreCase("warp") && !args[0].equalsIgnoreCase("collector") && !args[0].equalsIgnoreCase("tank")) {
+					sender.sendMessage("Invalid Class\nPlease select: compress|copy|warp|collector|tank|erase");
 				} else if (label.equalsIgnoreCase("class") && args.length > 0) {
 					event.playerToAbilityHashMap.get(sender).name = args[0];
 					sender.sendMessage("You Have Selected: " + args[0]);

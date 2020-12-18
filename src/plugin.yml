@@ -7,7 +7,7 @@ author: BoboHleach
 commands:
   class:
     description: Selects Class
-    usage: /<command> [compress|copy|warp|collector|tank]
+    usage: /<command> [compress|copy|warp|collector|tank|erase]
   start:
     description: Starts the game
     usage: /<command>
