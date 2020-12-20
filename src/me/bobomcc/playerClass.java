@@ -16,7 +16,7 @@ public class playerClass {
 
     protected main plugin;
     protected Player player;
-    public String name,teamName = "default";
+    public String name, teamName = "default";
     protected float abilityCooldown, holdingDamageAmount = 0;
     protected boolean hasUltimate = true;
     boolean isCompress,isHoldingDamage = false;
