@@ -26,7 +26,7 @@ public class  main extends JavaPlugin {
 			gracePeriodTicks = ((int) getConfig().get("game.gracePeriodSeconds") )* 20;
 			worldBorderHandler = new worldBorder(this, ((Player) sender).getWorld());
 			worldBorderHandler.startShrink();
-			getServer().broadcastMessage("Grace Period Ending in 5 Minutes");
+			getServer().broadcastMessage("Grace Period Ending in "+ ((int) getConfig().get("game.gracePeriodSeconds") /60)+" Minutes");
 			new BukkitRunnable() {
 				@Override
 				public void run() {
