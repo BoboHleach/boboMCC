@@ -28,8 +28,7 @@ public class worldBorder {
             @Override
             public void run() {
                 worldToShrink.getWorldBorder().setSize(worldToShrink.getWorldBorder().getSize() - 500, worldBorderReductionTimeSeconds);
-                plugin.getServer().broadcastMessage("World Border has Shrank");
-                plugin.getServer().broadcastMessage("World Border is " + (worldToShrink.getWorldBorder().getSize() - 500));
+                plugin.getServer().broadcastMessage("World border is " + (worldToShrink.getWorldBorder().getSize() / 2) + " and is shrinking to " + ((worldToShrink.getWorldBorder().getSize() / 2) - 250));
             }
         }.runTaskTimer(plugin,(long) worldBorderDelayTicks,(long) worldBorderDelayTicks);
     }
