@@ -1,5 +1,6 @@
 package me.bobomcc;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -16,10 +17,10 @@ public class scoreboardManager {
     protected void update(int timeLeft, boolean isUltimateAvailable, String abilityName, String teamName){
         resetScoreboard();
         if(timeLeft < 0) timeLeft = 0;
-        playerObjective.getScore("Activation Cooldown: "+ timeLeft).setScore(10);
-        playerObjective.getScore("Ultimate: " + isUltimateAvailable).setScore(20);
-        playerObjective.getScore("Ability: " + abilityName).setScore(0);
-        playerObjective.getScore("Team: " + teamName).setScore(5);
+        playerObjective.getScore(ChatColor.GREEN + "Ability: " + ChatColor.RESET + abilityName).setScore(40);
+        playerObjective.getScore(ChatColor.GREEN + "Ultimate: " + ChatColor.RESET + isUltimateAvailable).setScore(30);
+        playerObjective.getScore(ChatColor.GREEN + "Ability Cooldown: "+ ChatColor.RESET + timeLeft).setScore(20);
+        playerObjective.getScore(ChatColor.GREEN + "Team: " + ChatColor.RESET + teamName).setScore(10);
         player.setScoreboard(playerScoreboard);
     }
 
@@ -27,6 +28,6 @@ public class scoreboardManager {
         playerScoreboard = player.getServer().getScoreboardManager().getNewScoreboard();
         playerObjective = playerScoreboard.registerNewObjective("test", "dummy");
         playerObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        playerObjective.setDisplayName("Cooldown");
+        playerObjective.setDisplayName(ChatColor.YELLOW + "" + ChatColor.BOLD + "Stats");
     }
 }

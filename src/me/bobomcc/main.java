@@ -1,5 +1,6 @@
 package me.bobomcc;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,11 +27,11 @@ public class  main extends JavaPlugin {
 			gracePeriodTicks = ((int) getConfig().get("game.gracePeriodSeconds") )* 20;
 			worldBorderHandler = new worldBorder(this, ((Player) sender).getWorld());
 			worldBorderHandler.startShrink();
-			getServer().broadcastMessage("Grace Period Ending in "+ ((int) getConfig().get("game.gracePeriodSeconds") /60)+" Minutes");
+			getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRACE PERIOD ENDING IN "+ ((int) getConfig().get("game.gracePeriodSeconds") /60)+" Minutes");
 			new BukkitRunnable() {
 				@Override
 				public void run() {
-					getServer().broadcastMessage("Grace Period is over");
+					getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRACE PERIOD IS OVER");
 					isInGracePeriod = false;
 				}
 			}.runTaskLater(this,gracePeriodTicks);
@@ -46,12 +47,12 @@ public class  main extends JavaPlugin {
 					return true;
 				}
 				if (!args[0].equalsIgnoreCase("erase") && !args[0].equalsIgnoreCase("compress") && !args[0].equalsIgnoreCase("copy") && !args[0].equalsIgnoreCase("warp") && !args[0].equalsIgnoreCase("collector") && !args[0].equalsIgnoreCase("tank")) {
-					sender.sendMessage("Invalid Class\nPlease select: compress|copy|warp|collector|tank|erase");
+					sender.sendMessage(ChatColor.DARK_RED + "Invalid Class, please select: " + ChatColor.GREEN + "Compress, Copy, Warp, Collector, Tank, Erase");
 				} else if (label.equalsIgnoreCase("class") && args.length > 0) {
 					getConfig().set(((Player) sender).getDisplayName() + "." + "class", args[0].toLowerCase());
 					saveConfig();
 					event.playerToAbilityHashMap.get(sender).name = args[0];
-					sender.sendMessage("You Have Selected: " + args[0]);
+					sender.sendMessage(ChatColor.GREEN + "You Have Selected: " + args[0]);
 					return true;
 				}
 			}
