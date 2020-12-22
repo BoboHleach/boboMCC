@@ -1,7 +1,10 @@
 package me.bobomcc;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +14,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+
+import net.minecraft.server.v1_8_R1.ChatSerializer;
+import net.minecraft.server.v1_8_R1.EnumTitleAction;
+import net.minecraft.server.v1_8_R1.IChatBaseComponent;
+import net.minecraft.server.v1_8_R1.PacketPlayOutTitle;
 
 import java.util.HashMap;
 
@@ -89,11 +97,22 @@ public class eventHandler implements Listener {
 		}
 		playerToAbilityHashMap.get(e.getPlayer()).name = (String) plugin.getConfig().get(e.getPlayer().getDisplayName() + ".class");
 		playerTeamHashMap.putIfAbsent(e.getPlayer(), e.getPlayer().getDisplayName());
-		e.getPlayer().getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
+		if (!e.getPlayer().getInventory().contains(Material.COOKED_BEEF)){
+			e.getPlayer().getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
+		}
 	}
 
 	@EventHandler
 	protected void onPlayerDeath(PlayerDeathEvent e){
 		e.getEntity().getPlayer().setGameMode(GameMode.SPECTATOR);
+		// Death Message
+		IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + e.getEntity().getName() + " DIED!" + "\",color:" + ChatColor.DARK_RED.name().toLowerCase() + "}");
+		PacketPlayOutTitle title = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
+		PacketPlayOutTitle length = new PacketPlayOutTitle(15, 80, 15);
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
+			((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
+				}
+		    }
 	}
-}
+
