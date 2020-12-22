@@ -84,7 +84,11 @@ public class eventHandler implements Listener {
 	@EventHandler
 	protected void PlayerJoinEvent(PlayerJoinEvent e){
 		playerToAbilityHashMap.putIfAbsent(e.getPlayer(), new playerClass(e.getPlayer(), plugin));
-		playerTeamHashMap.putIfAbsent(e.getPlayer(), e.getPlayer().getDisplayName().toString());
+		if(plugin.getConfig().get(e.getPlayer().getDisplayName()+".class") == null) {
+			plugin.getConfig().set(e.getPlayer().getDisplayName()+".class","default");
+		}
+		playerToAbilityHashMap.get(e.getPlayer()).name = (String) plugin.getConfig().get(e.getPlayer().getDisplayName() + ".class");
+		playerTeamHashMap.putIfAbsent(e.getPlayer(), e.getPlayer().getDisplayName());
 		e.getPlayer().getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
 	}
 
