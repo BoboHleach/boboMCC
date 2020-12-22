@@ -85,7 +85,7 @@ public class playerClass {
             }.runTaskLater(plugin, 600);
     }
     protected void compressNormal(Player attackedPlayer, HashMap<Player, playerClass> playerToPlayerClass){
-        compressTeleportEvent(playerToPlayerClass.get(player), attackedPlayer, plugin, 600);
+        compressTeleportEvent(playerToPlayerClass.get(player), attackedPlayer, plugin, 300);
         abilityCooldown = 30;
     }
 
