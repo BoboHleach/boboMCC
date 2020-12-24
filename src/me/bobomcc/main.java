@@ -1,11 +1,19 @@
 package me.bobomcc;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import net.minecraft.server.v1_8_R1.ChatSerializer;
+import net.minecraft.server.v1_8_R1.EnumTitleAction;
+import net.minecraft.server.v1_8_R1.IChatBaseComponent;
+import net.minecraft.server.v1_8_R1.PacketPlayOutTitle;
+
 import java.io.File;
 
 public class  main extends JavaPlugin {
@@ -27,10 +35,31 @@ public class  main extends JavaPlugin {
 			gracePeriodTicks = ((int) getConfig().get("game.gracePeriodSeconds") )* 20;
 			worldBorderHandler = new worldBorder(this, ((Player) sender).getWorld());
 			worldBorderHandler.startShrink();
+		    try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + "GRACE PERIOD ENDING IN "+ ((int) getConfig().get("game.gracePeriodSeconds") /60) +" Minutes" + "\",color:" + ChatColor.DARK_RED.name().toLowerCase() + "}");
+			PacketPlayOutTitle title = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
+			PacketPlayOutTitle length = new PacketPlayOutTitle(15, 80, 15);
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
+				((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
 			getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRACE PERIOD ENDING IN "+ ((int) getConfig().get("game.gracePeriodSeconds") /60)+" Minutes");
+
+			}
 			new BukkitRunnable() {
 				@Override
 				public void run() {
+					IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + "GRACE PERIOD IS OVER" + "\",color:" + ChatColor.DARK_RED.name().toLowerCase() + "}");
+					PacketPlayOutTitle title = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
+					PacketPlayOutTitle length = new PacketPlayOutTitle(15, 80, 15);
+					for (Player player : Bukkit.getOnlinePlayers()) {
+						((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
+						((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
+					}
 					getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRACE PERIOD IS OVER");
 					isInGracePeriod = false;
 				}
