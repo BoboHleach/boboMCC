@@ -19,6 +19,8 @@ import net.minecraft.server.v1_8_R1.ChatSerializer;
 import net.minecraft.server.v1_8_R1.EnumTitleAction;
 import net.minecraft.server.v1_8_R1.IChatBaseComponent;
 import net.minecraft.server.v1_8_R1.PacketPlayOutTitle;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 
@@ -64,6 +66,9 @@ public class eventHandler implements Listener {
 		}
 
 		// Disables PvP Until Game has started and Grace Period is Over
+		if(receiver.getHealth() <= 0 ){
+			damager.setHealth(damager.getHealth() + 5);
+		}
 		if(!plugin.hasStarted || plugin.isInGracePeriod || playerTeamHashMap.get(e.getDamager()).equalsIgnoreCase(playerTeamHashMap.get(e.getEntity())))e.setCancelled(true);
 		else {
 			if(damager.getInventory().getItemInHand().getType() != Material.STICK )return;
@@ -105,6 +110,7 @@ public class eventHandler implements Listener {
 	@EventHandler
 	protected void onPlayerDeath(PlayerDeathEvent e){
 		e.getEntity().getPlayer().setGameMode(GameMode.SPECTATOR);
+
 		// Death Message
 		IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + e.getEntity().getName() + " DIED!" + "\",color:" + ChatColor.DARK_RED.name().toLowerCase() + "}");
 		PacketPlayOutTitle title = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
@@ -112,7 +118,6 @@ public class eventHandler implements Listener {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
 			((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
-				}
-		    }
+		}
 	}
-
+}
