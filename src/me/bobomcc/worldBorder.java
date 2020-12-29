@@ -40,7 +40,7 @@ public class worldBorder {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
 			((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
-        plugin.getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "WORLD BORDER IS SHRINKING IN " + ((float)worldBorderDelayTicks) / 1200 + " Minutes");
+        plugin.getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "WORLD BORDER IS SHRINKING IN " + ((float)worldBorderDelayTicks) / 1200 + " MINUTES");
         new BukkitRunnable() {
             @Override
             public void run() {
