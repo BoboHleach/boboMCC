@@ -34,7 +34,7 @@ public class worldBorder {
     }
 
     protected void startShrink(){
-    	IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + "WORLD BORDER IS SHRINKING IN " + ((float)worldBorderDelayTicks) / 1200 + " Minutes" + "\",color:" + ChatColor.DARK_RED.name().toLowerCase() + "}");
+    	IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + "WORLD BORDER IS SHRINKING IN " + ((float)worldBorderDelayTicks) / 1200 + " MINUTES" + "\",color:" + ChatColor.DARK_RED.name().toLowerCase() + "}");
 		PacketPlayOutTitle title = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
 		PacketPlayOutTitle length = new PacketPlayOutTitle(15, 80, 15);
 		for (Player player : Bukkit.getOnlinePlayers()) {
