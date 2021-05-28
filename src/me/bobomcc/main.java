@@ -22,81 +22,40 @@ public class  main extends JavaPlugin {
 	private worldBorder worldBorderHandler;
 	protected boolean isInGracePeriod = true;
 	private int gracePeriodTicks;
+	protected long timeInMillis;
+	
+	private void startGame(CommandSender sender) {
+		worldBorderHandler = new worldBorder(this, ((Player) sender).getWorld());
+		this.hasStarted = true;
+		timer();
+	}
+	
+	public void timer() {
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				timeInMillis = System.currentTimeMillis();
+				worldBorderHandler.checkShrinkTime();
+			}
+		}.runTaskTimer(this, 1, 1);
+	}
+	
 	@Override
 	public void onEnable(){
 		event = new eventHandler(this);
 		getServer().getPluginManager().registerEvents(event,this);
-		createConfigIfEmpty();
 	}
+	
+	
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(label.equalsIgnoreCase("start") && sender.isOp() && !hasStarted) {
-			hasStarted = true;
-			gracePeriodTicks = ((int) getConfig().get("game.gracePeriodSeconds") )* 20;
-			worldBorderHandler = new worldBorder(this, ((Player) sender).getWorld());
-			worldBorderHandler.startShrink();
-		    try {
-				Thread.sleep(6000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + "GRACE PERIOD ENDING IN "+ ((int) getConfig().get("game.gracePeriodSeconds") /60) +" Minutes" + "\",color:" + ChatColor.DARK_RED.name().toLowerCase() + "}");
-			PacketPlayOutTitle title = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
-			PacketPlayOutTitle length = new PacketPlayOutTitle(15, 80, 15);
-			for (Player player : Bukkit.getOnlinePlayers()) {
-				((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
-				((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
-			getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRACE PERIOD ENDING IN "+ ((int) getConfig().get("game.gracePeriodSeconds") /60)+" Minutes");
-
-			}
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					IChatBaseComponent chatTitle = ChatSerializer.a("{\"text\": \"" + "GRACE PERIOD IS OVER" + "\",color:" + ChatColor.DARK_RED.name().toLowerCase() + "}");
-					PacketPlayOutTitle title = new PacketPlayOutTitle(EnumTitleAction.TITLE, chatTitle);
-					PacketPlayOutTitle length = new PacketPlayOutTitle(15, 80, 15);
-					for (Player player : Bukkit.getOnlinePlayers()) {
-						((CraftPlayer) player).getHandle().playerConnection.sendPacket(title);
-						((CraftPlayer) player).getHandle().playerConnection.sendPacket(length);
-					}
-					getServer().broadcastMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + "GRACE PERIOD IS OVER");
-					isInGracePeriod = false;
-				}
-			}.runTaskLater(this,gracePeriodTicks);
+			startGame(sender);
 			return true;
-		}
-		if(!hasStarted) {
-			// Checks if flag 1 is a valid Option
-			if (args.length != 0) {
-				if (label.equalsIgnoreCase("team") && args.length > 0) {
-					event.playerTeamHashMap.replace((Player) sender, args[0]);
-					getConfig().set(((Player) sender).getDisplayName()+"."+"team", args[0]);
-					saveConfig();
-					return true;
-				}
-				if (!args[0].equalsIgnoreCase("erase") && !args[0].equalsIgnoreCase("compress") && !args[0].equalsIgnoreCase("copy") && !args[0].equalsIgnoreCase("warp") && !args[0].equalsIgnoreCase("collector") && !args[0].equalsIgnoreCase("tank")) {
-					sender.sendMessage(ChatColor.DARK_RED + "Invalid Class, please select: " + ChatColor.GREEN + "Compress, Copy, Warp, Collector, Tank, Erase");
-				} else if (label.equalsIgnoreCase("class") && args.length > 0) {
-					getConfig().set(((Player) sender).getDisplayName() + "." + "class", args[0].toLowerCase());
-					saveConfig();
-					event.playerToAbilityHashMap.get(sender).name = args[0];
-					sender.sendMessage(ChatColor.GREEN + "You Have Selected: " + args[0]);
-					return true;
-				}
-			}
 		}
 		return false;
 	}
-
-	private void createConfigIfEmpty(){
-		File configFile = new File(this.getDataFolder(), "config.yml");
-		if(!configFile.exists()){
-			getConfig().set("game.gracePeriodSeconds",300);
-			getConfig().set("game.worldBorder.reductionTime",120);
-			getConfig().set("game.worldBorder.delay",3000);
-			getConfig().set("game.worldBorder.startingSize",2500);
-			saveConfig();
-		}
-	}
 }
+	
