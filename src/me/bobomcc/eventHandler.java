@@ -34,22 +34,20 @@ public class eventHandler implements Listener {
 	protected void PlayerInteractEvent(PlayerInteractEvent e) {
 		if (!plugin.hasStarted) e.setCancelled(true);
 		else if(e.getPlayer().getItemInHand().getType() != Material.STICK || playerToAbilityHashMap.get(e.getPlayer()).abilityCooldown > 0)return;
-		else {
-			if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-				if (playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("collector")) {
-					playerToAbilityHashMap.get(e.getPlayer()).collectorNormal();
-				} else if (playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("warp")) {
-					playerToAbilityHashMap.get(e.getPlayer()).warpNormal();
-				}
-				else if(playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("tank")){
-					playerToAbilityHashMap.get(e.getPlayer()).tankToggleDamageHold();
-				}
+		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			if (playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("collector")) {
+				playerToAbilityHashMap.get(e.getPlayer()).collectorNormal();
+			} else if (playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("warp")) {
+				playerToAbilityHashMap.get(e.getPlayer()).warpNormal();
 			}
+			else if(playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("tank")){
+				playerToAbilityHashMap.get(e.getPlayer()).tankToggleDamageHold();
+			}
+		}
 
-			else if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-				if (playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("collector")) {
-					playerToAbilityHashMap.get(e.getPlayer()).collectorUltimate();
-				}
+		else if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
+			if (playerToAbilityHashMap.get(e.getPlayer()).name.equalsIgnoreCase("collector")) {
+				playerToAbilityHashMap.get(e.getPlayer()).collectorUltimate();
 			}
 		}
 	}

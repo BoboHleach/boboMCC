@@ -23,21 +23,27 @@ public class playerClass {
     Location previousCompressionLocation;
     protected scoreboardManager playerScoreBoardClass;
 
-    protected playerClass(Player playerObject, main mainPlugin) {
-        player = playerObject;
-        plugin = mainPlugin;
+    protected playerClass() {
         playerScoreBoardClass = new scoreboardManager(player);
         new BukkitRunnable() {
-            @Override
             public void run() {
-                teamName = plugin.event.playerTeamHashMap.get(playerObject);
+                teamName = plugin.event.playerTeamHashMap.get();
                 playerScoreBoardClass.update((int) abilityCooldown, hasUltimate, name, teamName);
                 abilityCooldown = abilityCooldown - 1;
             }
         }.runTaskTimer(plugin, 20, 20);
     }
-
-    private void compressTeleportEvent(playerClass attackedPlayerClass, Player attackedPlayer, Plugin p, int timerDelay) {
+    
+    protected void setPlugin(main plugin) {
+    	this.plugin = plugin;
+    }
+    
+    protected void setPlayer(Player player) {
+    	this.player = player;
+    }
+    
+    
+    private void teleportCompressedPlayer(playerClass attackedPlayerClass, Player attackedPlayer, int timerDelay) {
         attackedPlayer.sendMessage("You have been Compressed, Releasing in 15 seconds");
         this.previousCompressionLocation = attackedPlayer.getLocation();
         attackedPlayerClass.isCompress = true;
@@ -50,29 +56,35 @@ public class playerClass {
                 attackedPlayer.teleport(previousCompressionLocation);
                 attackedPlayer.setGameMode(GameMode.SURVIVAL);
             }
-        }.runTaskLater(p, timerDelay);
+        }.runTaskLater(this.plugin, timerDelay);
     }
-
-    private void getOreToPlayer(int min, int max) {
-        World playerWorld = player.getWorld();
+    
+    private void mineBlock(Location location) {
+    	location.getBlock().breakNaturally();
+    }
+    private void mineBlocksAroundPlayer(int min, int max) {
         for (int x = min; x < max; x++) {
             for (int y = min; y < max; y++) {
                 for (int z = min; z < max; z++) {
-                    Material blockType = playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).getType();
-                    if (blockType == Material.IRON_ORE || blockType == Material.DIAMOND_ORE || blockType == Material.COAL_ORE || blockType == Material.GOLD_ORE) {
-                        player.getInventory().addItem(new ItemStack(blockType, 1));
-                        playerWorld.getBlockAt((int) (player.getLocation().getX() + x), (int) (player.getLocation().getY() + y), (int) (player.getLocation().getZ() + z)).setType(Material.AIR);
-                    }
+                    mineBlock(new Location(this.player.getWorld(),x,y,z));
                 }
             }
         }
     }
 
-    private void playerTeleport(Player p, int min, int max) {
-        Random rand = new Random();
-        int xCoordinate = rand.nextInt(max + -min) - min;
-        int zCoordinate = rand.nextInt(max + -min) - min;
-        player.teleport(new Location(player.getWorld(), player.getLocation().getX() + xCoordinate, player.getWorld().getHighestBlockYAt((int) player.getLocation().getX() + xCoordinate, (int) player.getLocation().getZ() + zCoordinate) + 1, player.getLocation().getZ() + zCoordinate));
+    private int generateRanomdInt(int maximumRange, int minimumRange) {
+    	Random rand = new Random();
+    	return rand.nextInt(maximumRange-minimumRange) - minimumRange;
+    }
+    
+    private void teleportPlayer(Location location) {
+    	this.player.teleport(location);
+    }
+    private void playerTeleport(int min, int max) {
+        int xCoordinate = generateRanomdInt(max, min);
+        int zCoordinate = generateRanomdInt(max, min);
+        Location newLocation = new Location(this.player.getWorld(),xCoordinate,this.player.getWorld().getHighestBlockYAt(xCoordinate, zCoordinate),zCoordinate);
+        teleportPlayer(newLocation);
     }
 
     protected void copyNormal(Player attackedPlayer, HashMap<Player, playerClass>  playerToPlayerClass) {
@@ -83,45 +95,6 @@ public class playerClass {
                     name = "copy";
                 }
             }.runTaskLater(plugin, 600);
-    }
-    protected void compressNormal(Player attackedPlayer, HashMap<Player, playerClass> playerToPlayerClass){
-        compressTeleportEvent(playerToPlayerClass.get(player), attackedPlayer, plugin, 300);
-        abilityCooldown = 30;
-    }
-
-    protected void warpNormal(){
-        playerTeleport(player, -10, 10);
-        abilityCooldown = 30;
-    }
-
-    protected void collectorNormal() {
-        getOreToPlayer(-5, 5);
-        abilityCooldown = 30;
-    }
-
-    protected void collectorUltimate() {
-        if(hasUltimate) {
-            getOreToPlayer(-15, 15);
-            hasUltimate = false;
-        }
-    }
-
-    protected void warpUltimate(Player attackedPlayer, Player damager, HashMap<Player, playerClass>  playerToPlayerClass){
-        if(hasUltimate) {
-            attackedPlayer.teleport(attackedPlayer.getLocation().add(0, 25, 0));
-            playerToPlayerClass.get(damager).hasUltimate = false;
-        }
-    }
-
-    protected void tankToggleDamageHold(){
-        isHoldingDamage = !isHoldingDamage;
-        player.sendMessage("Holding Damage: " + isHoldingDamage);
-    }
-
-    protected void eraseAbility(Player attackedPlayer, HashMap<Player,playerClass> playerClassHashMap){
-        if(abilityCooldown > 0)return;
-        playerClassHashMap.get(attackedPlayer).abilityCooldown = playerClassHashMap.get(attackedPlayer).abilityCooldown + 15;
-        abilityCooldown = 30;
     }
 }
 
